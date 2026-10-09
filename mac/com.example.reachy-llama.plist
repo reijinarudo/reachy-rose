@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Language model server for a local Reachy Mini brain (llama.cpp llama-server).
+  These are the settings Rose runs with. Replace YOUR_USERNAME, then:
+    cp com.example.reachy-llama.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.example.reachy-llama.plist
+  After any edit: launchctl unload, then launchctl load (see docs/running-rose-locally.md, section 8).
+  Optional: add "-np" and "1" to ProgramArguments if your server splits its context across slots (section 4).
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.example.reachy-llama</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/llama-server</string>
+    <string>-hf</string>
+    <string>unsloth/Qwen3-VL-4B-Instruct-GGUF:Q6_K</string>
+    <string>-c</string>
+    <string>32768</string>
+    <string>-fa</string>
+    <string>on</string>
+    <string>--temp</string>
+    <string>0.7</string>
+    <string>--top-p</string>
+    <string>0.8</string>
+    <string>--top-k</string>
+    <string>20</string>
+    <string>--min-p</string>
+    <string>0.0</string>
+    <string>--presence-penalty</string>
+    <string>1.5</string>
+    <string>--port</string>
+    <string>8080</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/YOUR_USERNAME/Library/Logs/reachy-llama.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/YOUR_USERNAME/Library/Logs/reachy-llama.log</string>
+</dict>
+</plist>

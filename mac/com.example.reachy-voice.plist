@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Speech pipeline for a local Reachy Mini brain (Hugging Face speech-to-speech, realtime mode).
+  Listens for the robot on port 8765 and calls the language model server on port 8080.
+  These are the settings Rose runs with. Replace YOUR_USERNAME and the install path, then load it
+  the same way as the model server agent.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.example.reachy-voice</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/YOUR_USERNAME/speech-to-speech/.venv/bin/speech-to-speech</string>
+    <string>--mode</string>
+    <string>realtime</string>
+    <string>--stt</string>
+    <string>parakeet-tdt</string>
+    <string>--tts</string>
+    <string>kokoro</string>
+    <string>--llm_backend</string>
+    <string>responses-api</string>
+    <string>--model_name</string>
+    <string>unsloth/Qwen3-VL-4B-Instruct-GGUF</string>
+    <string>--responses_api_base_url</string>
+    <string>http://127.0.0.1:8080/v1</string>
+    <string>--responses_api_api_key</string>
+    <string>none</string>
+    <string>--chat_size</string>
+    <string>8</string>
+    <string>--no_enable_live_transcription</string>
+    <string>--kokoro_voice</string>
+    <string>bf_lily</string>
+    <string>--kokoro_lang_code</string>
+    <string>b</string>
+    <string>--min_silence_ms</string>
+    <string>1800</string>
+    <string>--ws_host</string>
+    <string>0.0.0.0</string>
+    <string>--ws_port</string>
+    <string>8765</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/YOUR_USERNAME/Library/Logs/reachy-voice.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/YOUR_USERNAME/Library/Logs/reachy-voice.log</string>
+</dict>
+</plist>
