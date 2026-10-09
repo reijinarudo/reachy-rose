@@ -1,0 +1,30 @@
+# Rose voice patches to kokoro_handler.py, captured 2026-09-02.
+# Line numbers match the speech-to-speech version installed on Rose's Mac; check them against your copy before applying.
+# Base file: speech_to_speech/TTS/kokoro_handler.py from huggingface/speech-to-speech (Apache-2.0), unmodified install.
+# Target file:   <venv>/lib/python3*/site-packages/speech_to_speech/TTS/kokoro_handler.py
+# Apply with:    patch <live file> < rose_kokoro_patches.diff   (after stripping these # header lines)
+# Integrity check: grep -c "Rose patch" <live file>  should return 4
+# Note: the "Change gender" patch requires the parselmouth package in the cascade venv.
+246a247,253
+>         # Rose patch 2026-08-08: strip markdown symbols so TTS never says asterisk
+>         text = text.translate(str.maketrans('', '', '*_#`~'))
+>
+>         # Rose patch 2026-07-16: no audio for wordless replies (e.g. '...'), silence stays silent
+>         if not any(ch.isalnum() for ch in text):
+>             return
+>
+268c275
+<             if language_code is not None:
+---
+>             if False:  # Rose patch 2026-07-16: pin startup pipeline/voice, no auto language switch
+300a308,317
+>                 # Rose patch: youthful voice, PSOLA pitch+formant shift (Lily recipe)
+>                 try:
+>                     import parselmouth as _pm
+>                     from parselmouth.praat import call as _pmcall
+>                     _snd = _pm.Sound(audio.astype('float64'), sampling_frequency=24000)
+>                     _out = _pmcall(_snd, "Change gender", 75, 600, 1.12, 255, 1.0, 1.0)
+>                     audio = _out.values[0].astype(np.float32)
+>                 except Exception as _e:
+>                     logger.warning(f"Rose voice shift failed, raw audio used: {_e}")
+>
