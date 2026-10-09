@@ -1,0 +1,19 @@
+# Private originals copied from the robot. Never publish.
+_from_robot/
+
+# Local settings and secrets
+.env
+config.local.*
+
+# Logs, caches, system files
+*.log
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# Model weights
+*.gguf
+*.safetensors
+
+# Demo video is hosted on YouTube; local copy kept out of the repo
+docs/rose-demo.mp4
