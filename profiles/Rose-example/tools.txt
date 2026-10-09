@@ -1,0 +1,7 @@
+camera
+forget
+go_to_sleep
+head_tracking
+idle_do_nothing
+remember
+move_head
